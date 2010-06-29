@@ -1,0 +1,20 @@
+{
+  "name": "Amazon Prices for Ireland",
+  "version": "1.0",
+  "description": "Decorate product pages on amazon.co.uk with the equivilent 
+                  irish price. This price will be in euro and include the irish
+                  VAT rate where applicable.",
+  "permissions": [
+    "http://download.finance.yahoo.com/*"
+  ],
+  "background_page" : "background.html",
+  "content_scripts": [
+    {
+      "matches": ["http://www.amazon.co.uk/*",
+                  "https://www.amazon.co.uk/*",
+                  "http://amazon.co.uk/*",
+                  "https://amazon.co.uk/*"],
+      "js": ["contentscript.js"]
+    }
+  ]
+}
