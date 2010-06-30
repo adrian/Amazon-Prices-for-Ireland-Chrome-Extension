@@ -1,9 +1,7 @@
 {
   "name": "Amazon Prices for Ireland",
   "version": "1.0",
-  "description": "Decorate product pages on amazon.co.uk with the equivilent 
-                  Irish price. This price will be in euro and include the Irish
-                  VAT rate where applicable.",
+  "description": "Decorate product pages on amazon.co.uk with the equivilent Irish price. This price will be in euro and include the Irish VAT rate.",
   "icons": {
     "128": "images/logo-128.png",
     "48": "images/logo-48.png",
