@@ -1,10 +1,6 @@
 (function() {
-    var dateRateLastRetrieved = '26/06/2010';
-    var todayDate = new Date();
-    var todayAsString = todayDate.getDate() + "/" + todayDate.getMonth() + "/" + todayDate.getFullYear();
-    
-    var IRISH_VAT_RATE = 0.21;
-    var UK_VAT_RATE = 0.175;
+    const IRISH_VAT_RATE = 0.21;
+    const UK_VAT_RATE = 0.175;
     
     function getNode(xpath) {
         var xpath_result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);    
@@ -67,29 +63,33 @@
     }
     
     function updatePageWithIrishPrice(gbpToEurRate) {
-        // Find the GBP price
-        var gbpPriceNode = getNode("//b[@class='priceLarge']");
-        if (gbpPriceNode != null) {
-            // strip off the pound sign and comma
-            var priceInGBP = parseFloat(gbpPriceNode.innerHTML.replace(/\u00A3/, "").replace(/,/, ""));
-            console.log("priceInGBP: " + priceInGBP);
-    
-            // Get the ex-VAT price, convert to EUR and add on the irish VAT
-            var irishPrice = calculateIrishPrice(priceInGBP, gbpToEurRate);
-            console.log("irishPrice: " + irishPrice);
-    
-            // Get the TBODY node under which we're going to put a new TR with the irish price
-            // This node is 3 levels up from the GBP price node
-            var pricingTBodyNode = gbpPriceNode.parentNode.parentNode.parentNode;
-    
-            // Get the TR containing the GBP price. We're going to clone this node
-            var gbpPriceTRNode = gbpPriceNode.parentNode.parentNode;
-    
-            // Create a new TR, populate it with the Irish price and add it to the TBODY
-            var irishPriceNode = gbpPriceTRNode.cloneNode(true);
-            irishPriceNode.cells[0].innerHTML = "Irish Price:";
-            irishPriceNode.cells[1].innerHTML = "<b class=\"priceLarge\">\u20ac" + irishPrice + "</b> approximately. " + shippingMessage(priceInGBP);
-            pricingTBodyNode.appendChild(irishPriceNode);
+        if (gbpToEurRate != null) {
+            // Find the GBP price
+            var gbpPriceNode = getNode("//b[@class='priceLarge']");
+            if (gbpPriceNode != null) {
+                // strip off the pound sign and comma
+                var priceInGBP = parseFloat(gbpPriceNode.innerHTML.replace(/\u00A3/, "").replace(/,/, ""));
+                console.log("priceInGBP: " + priceInGBP);
+
+                // Get the ex-VAT price, convert to EUR and add on the irish VAT
+                var irishPrice = calculateIrishPrice(priceInGBP, gbpToEurRate);
+                console.log("irishPrice: " + irishPrice);
+
+                // Get the TBODY node under which we're going to put a new TR with the irish price
+                // This node is 3 levels up from the GBP price node
+                var pricingTBodyNode = gbpPriceNode.parentNode.parentNode.parentNode;
+
+                // Get the TR containing the GBP price. We're going to clone this node
+                var gbpPriceTRNode = gbpPriceNode.parentNode.parentNode;
+
+                // Create a new TR, populate it with the Irish price and add it to the TBODY
+                var irishPriceNode = gbpPriceTRNode.cloneNode(true);
+                irishPriceNode.cells[0].innerHTML = "Irish Price:";
+                irishPriceNode.cells[1].innerHTML = "<b class=\"priceLarge\">\u20ac" + irishPrice + "</b> approximately. " + shippingMessage(priceInGBP);
+                pricingTBodyNode.appendChild(irishPriceNode);
+            } else {
+                console.log("Couldn't find the price node");
+            }
         } else {
             console.log("Problem retrieving exchange rate");
         }
