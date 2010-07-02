@@ -65,7 +65,7 @@
     function updatePageWithIrishPrice(gbpToEurRate) {
         if (gbpToEurRate != null) {
             // Find the GBP price
-            var gbpPriceNode = getNode("//b[@class='priceLarge']");
+            var gbpPriceNode = getNode("//tbody/tr/td/b[@class='priceLarge']");
             if (gbpPriceNode != null) {
                 // strip off the pound sign and comma
                 var priceInGBP = parseFloat(gbpPriceNode.innerHTML.replace(/\u00A3/, "").replace(/,/, ""));
