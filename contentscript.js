@@ -1,6 +1,6 @@
 (function() {
     const IRISH_VAT_RATE = 0.21;
-    const UK_VAT_RATE = 0.175;
+    const UK_VAT_RATE = 0.20;
     
     function getNode(xpath) {
         var xpath_result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);    
