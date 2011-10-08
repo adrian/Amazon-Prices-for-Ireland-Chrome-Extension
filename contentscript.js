@@ -65,7 +65,7 @@
     function updatePageWithIrishPrice(gbpToEurRate) {
         if (gbpToEurRate != null) {
             // Find the GBP price
-            var gbpPriceNode = getNode("//tbody/tr/td/b[@class='priceLarge']");
+            var gbpPriceNode = getNode("//*[@class='priceLarge']");
             if (gbpPriceNode != null) {
                 // strip off the pound sign and comma
                 var priceInGBP = parseFloat(gbpPriceNode.innerHTML.replace(/\u00A3/, "").replace(/,/, ""));
@@ -75,12 +75,17 @@
                 var irishPrice = calculateIrishPrice(priceInGBP, gbpToEurRate);
                 console.log("irishPrice: " + irishPrice);
 
-                // Get the TBODY node under which we're going to put a new TR with the irish price
-                // This node is 3 levels up from the GBP price node
-                var pricingTBodyNode = gbpPriceNode.parentNode.parentNode.parentNode;
-
                 // Get the TR containing the GBP price. We're going to clone this node
-                var gbpPriceTRNode = gbpPriceNode.parentNode.parentNode;
+                var gbpPriceTRNode = gbpPriceNode.parentNode;
+                while (gbpPriceTRNode.nodeName.toLowerCase() != 'tr') {
+                     gbpPriceTRNode = gbpPriceTRNode.parentNode;
+                }
+
+                // Get the TBODY node under which we're going to put a new TR with the irish price
+                var pricingTBodyNode = gbpPriceTRNode.parentNode;
+                while (pricingTBodyNode.nodeName.toLowerCase() != 'tbody') {
+                    pricingTBodyNode = pricingTBodyNode.parentNode;
+                }
 
                 // Create a new TR, populate it with the Irish price and add it to the TBODY
                 var irishPriceNode = gbpPriceTRNode.cloneNode(true);
