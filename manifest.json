@@ -1,6 +1,7 @@
 {
+  "manifest_version": 2,
   "name": "Amazon Prices for Ireland",
-  "version": "1.7",
+  "version": "1.8",
   "description": "Decorate product pages on amazon.co.uk with the equivalent Irish price. This price will be in euro and include the Irish VAT rate.",
   "icons": {
     "128": "images/logo-128.png",
@@ -10,7 +11,10 @@
   "permissions": [
     "http://download.finance.yahoo.com/*"
   ],
-  "background_page" : "background.html",
+  "background": {
+    "scripts": [ "background.js" ],
+    "persistent": false
+  },
   "content_scripts": [
     {
       "matches": ["http://www.amazon.co.uk/*",

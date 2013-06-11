@@ -111,5 +111,5 @@
     }
 
     // Send a message back to the extenstion to retrieve the latest GBP to EUR exchange rate    
-    chrome.extension.sendRequest({'action' : 'fetchExchangeRate'}, updatePageWithIrishPrice);
+    chrome.runtime.sendMessage('fetchExchangeRate', updatePageWithIrishPrice);
 })();
